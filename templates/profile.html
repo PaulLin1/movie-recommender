@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+<div>
+    <div style="display: flex; justify-content: space-between;">
+        <h3 style="margin-right: 3rem; display: inline-block; vertical-align: bottom;">Your Profile</h3>
+        <button padding: 1px;>Clear Likes</button>
+    </div>
+    <ul>
+        {% for i in likes %}
+        <li>IMDb: {{ i }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
