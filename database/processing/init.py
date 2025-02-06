@@ -16,13 +16,16 @@ def create_db():
         )
     ''')
     
-    df = pd.read_csv('data/movielens/movies_metadata.csv', low_memory=False)
+    cursor.execute("SELECT id FROM movielens;")
+
+    if len(cursor.fetchall()) == 0:
+        df = pd.read_csv('data/movielens/movies_metadata.csv', low_memory=False)
     
-    for _, row in df.iterrows():
-        cursor.execute('''
-            INSERT INTO movielens (title, release_date, vote_average, vote_count) 
-            VALUES (?, ?, ?, ?)
-        ''', (row['title'], row['release_date'], row['vote_average'], row['vote_count']))
+        for _, row in df.iterrows():
+            cursor.execute('''
+                INSERT INTO movielens (title, release_date, vote_average, vote_count) 
+                VALUES (?, ?, ?, ?)
+            ''', (row['title'], row['release_date'], row['vote_average'], row['vote_count']))
     
     # Insert code to add netflix dataset here
 
@@ -31,7 +34,7 @@ def create_db():
     # Feel free to add functionality for multiple users if you want
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS likes (
-            title INTEGER PRIMARY KEY
+            movie_id INTEGER PRIMARY KEY
         )
     ''')  
     conn.commit()
